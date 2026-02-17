@@ -1,0 +1,47 @@
+{
+    "manifest_version": 2,
+    "name": "Del365 - Suppression données Office 365",
+    "version": "1.0.3",
+    "description": "Supprime rapidement les données de navigation du domaine office365.com",
+    "icons": {
+        "48": "icons/icon-48.png",
+        "96": "icons/icon-96.png"
+    },
+    "permissions": [
+        "browsingData",
+        "notifications",
+        "cookies",
+        "<all_urls>"
+    ],
+    "background": {
+        "scripts": [
+            "background.js"
+        ]
+    },
+    "browser_action": {
+        "default_icon": {
+            "48": "icons/icon-48.png",
+            "96": "icons/icon-96.png"
+        },
+        "default_title": "Supprimer les données Office 365"
+    },
+    "commands": {
+        "delete-office365-data": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+D",
+                "mac": "Command+Shift+D"
+            },
+            "description": "Supprimer les données Office 365"
+        }
+    },
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "{a6ac1364-317e-4c41-bc6b-e7e46fde72f4}",
+            "data_collection_permissions": {
+                "required": [
+                    "none"
+                ]
+            }
+        }
+    }
+}
