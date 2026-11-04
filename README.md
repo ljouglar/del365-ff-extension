@@ -25,10 +25,10 @@ Cette extension ajoute un bouton dans la barre d'outils Firefox et un raccourci 
 ### Installation de la version signée (recommandé)
 
 1. Ouvrez la [dernière release](https://github.com/ljouglar/del365-ff-extension/releases/latest) dans Firefox
-2. Cliquez sur le fichier `.xpi` (par exemple `del365-1.1.0.xpi`) et acceptez l'installation
+2. Cliquez sur le fichier `.xpi` (par exemple `del365-1.1.1.xpi`) et acceptez l'installation
 3. Épinglez l'icône depuis le menu des extensions (pièce de puzzle)
 
-L'extension est signée par Mozilla : elle reste installée après un redémarrage de Firefox. Il n'y a pas de mise à jour automatique : pour passer à une nouvelle version, installez le `.xpi` de la nouvelle release.
+L'extension est signée par Mozilla : elle reste installée après un redémarrage de Firefox. À partir de la 1.1.1, Firefox installe automatiquement les nouvelles versions (il consulte `updates.json` sur la branche `main`). Si vous avez la 1.1.0, installez une fois la 1.1.1 à la main pour en profiter.
 
 ### Installation en développement
 
@@ -62,6 +62,7 @@ Ce chargement est temporaire : l'extension disparaît au redémarrage de Firefox
 ```
 del365-ff-extension/
 ├── manifest.json           # Fichier de configuration de l'extension
+├── updates.json           # Manifeste de mises à jour lu par Firefox (update_url)
 ├── background.js          # Script d'arrière-plan (logique de suppression)
 ├── icons/                 # Icônes de l'extension
 │   ├── icon-48.png
@@ -69,6 +70,13 @@ del365-ff-extension/
 ├── LICENSE                # Licence MIT
 └── README.md
 ```
+
+### Publier une nouvelle version
+
+1. Augmenter `version` dans `manifest.json`
+2. Signer : `web-ext sign --channel=unlisted` (clés AMO dans `.env`), en excluant `updates.json`, `.env`, `.claude`, `INSTALL.md` et `web-ext-artifacts`
+3. Créer la release GitHub `vX.Y.Z` avec le `.xpi` signé renommé `del365-X.Y.Z.xpi`
+4. Ajouter la version dans `updates.json` (`update_link` vers le `.xpi` de la release, `update_hash` = `sha256:` + empreinte du fichier) puis pousser sur `main`
 
 ### Permissions requises
 
@@ -101,6 +109,9 @@ Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de 
 L. Jouglar
 
 ## Notes de version
+
+### v1.1.1
+- Mises à jour automatiques via `update_url` (manifeste `updates.json` hébergé sur GitHub)
 
 ### v1.1.0
 - Domaines ajoutés : cloud.microsoft, static.microsoft, office.net, live.com, sharepoint.com

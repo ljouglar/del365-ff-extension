@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Del365 - Suppression données Office 365",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "description": "Supprime rapidement les données de navigation du domaine office365.com",
     "icons": {
         "48": "icons/icon-48.png",
@@ -41,7 +41,8 @@
                 "required": [
                     "none"
                 ]
-            }
+            },
+            "update_url": "https://raw.githubusercontent.com/ljouglar/del365-ff-extension/main/updates.json"
         }
     }
 }
