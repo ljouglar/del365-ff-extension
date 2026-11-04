@@ -4,7 +4,7 @@ Extension Firefox pour supprimer les données de navigation du domaine Office 36
 
 ## Description
 
-Cette extension ajoute un bouton dans la barre d'outils Firefox et un raccourci clavier permettant de supprimer rapidement toutes les données de navigation (cookies) associées à Office 365 et Microsoft. Cela peut être utile pour résoudre des problèmes de connexion ou de cache sur Office 365.
+Cette extension ajoute un bouton dans la barre d'outils Firefox et un raccourci clavier permettant de supprimer rapidement toutes les données de navigation (cookies, y compris partitionnés et dans les conteneurs, ainsi que localStorage, IndexedDB et service workers) associées à Office 365 et Microsoft. Cela peut être utile pour résoudre des problèmes de connexion ou de cache sur Office 365.
 
 ## Fonctionnalités
 
@@ -12,10 +12,11 @@ Cette extension ajoute un bouton dans la barre d'outils Firefox et un raccourci 
 - **Raccourci clavier** : `Ctrl+Shift+D` (ou `Cmd+Shift+D` sur Mac) pour une suppression rapide
 - **Notification de confirmation** : Message indiquant le nombre de cookies supprimés
 - **Suppression ciblée** : Supprime uniquement les cookies des domaines suivants :
-  - office365.com
+  - office365.com / office.com / office.net / outlook.com
   - microsoft.com (Teams, Copilot)
   - microsoftonline.com (authentification)
-  - office.com / outlook.com
+  - cloud.microsoft / static.microsoft (nouveaux domaines Outlook, Teams, M365)
+  - live.com / sharepoint.com
   - office-web.sips-services.com
   - koesio.com
 

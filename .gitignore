@@ -2,3 +2,4 @@
 /.claude
 /.web-extension-id
 /web-ext-artifacts
+/.env
