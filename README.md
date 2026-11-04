@@ -8,24 +8,30 @@ Cette extension ajoute un bouton dans la barre d'outils Firefox et un raccourci 
 
 ## Fonctionnalités
 
-- **Bouton dans la barre d'outils** : Clic sur l'icône pour déclencher la suppression immédiate
-- **Raccourci clavier** : `Ctrl+Shift+D` (ou `Cmd+Shift+D` sur Mac) pour une suppression rapide
-- **Notification de confirmation** : Message indiquant le nombre de cookies supprimés
-- **Suppression ciblée** : Supprime uniquement les cookies des domaines suivants :
-  - office365.com / office.com / office.net / outlook.com
-  - microsoft.com (Teams, Copilot)
-  - microsoftonline.com (authentification)
-  - cloud.microsoft / static.microsoft (nouveaux domaines Outlook, Teams, M365)
-  - live.com / sharepoint.com
-  - office-web.sips-services.com
-  - koesio.com
+Deux niveaux de nettoyage :
+
+| Niveau | Déclenchement | Domaines nettoyés | Effet |
+|---|---|---|---|
+| **Léger** | Clic sur l'icône, ou `Ctrl+Shift+D` (`Cmd+Shift+D` sur Mac) | cloud.microsoft, office.com, office365.com | Débloque Outlook / M365 sans toucher à la session SSO : Teams, SharePoint et les autres outils restent connectés |
+| **Complet** | Clic droit sur l'icône → « Reset complet », ou `Alt+Shift+D` | Tous les domaines ci-dessous | Déconnecte tous les services Microsoft, pour quand la session d'authentification elle-même est cassée |
+
+Domaines du reset complet :
+- office365.com / office.com / office.net / outlook.com
+- microsoft.com (Teams, Copilot)
+- microsoftonline.com (authentification)
+- cloud.microsoft / static.microsoft (nouveaux domaines Outlook, Teams, M365)
+- live.com / sharepoint.com
+- office-web.sips-services.com
+- koesio.com
+
+Dans les deux cas, l'extension supprime les cookies (y compris partitionnés et dans les conteneurs), ainsi que le localStorage, IndexedDB et les service workers des sites concernés. Une notification indique le niveau appliqué et le nombre de cookies supprimés.
 
 ## Installation
 
 ### Installation de la version signée (recommandé)
 
 1. Ouvrez la [dernière release](https://github.com/ljouglar/del365-ff-extension/releases/latest) dans Firefox
-2. Cliquez sur le fichier `.xpi` (par exemple `del365-1.1.1.xpi`) et acceptez l'installation
+2. Cliquez sur le fichier `.xpi` (par exemple `del365-1.2.0.xpi`) et acceptez l'installation
 3. Épinglez l'icône depuis le menu des extensions (pièce de puzzle)
 
 L'extension est signée par Mozilla : elle reste installée après un redémarrage de Firefox. À partir de la 1.1.1, Firefox installe automatiquement les nouvelles versions (il consulte `updates.json` sur la branche `main`). Si vous avez la 1.1.0, installez une fois la 1.1.1 à la main pour en profiter.
@@ -50,10 +56,11 @@ Ce chargement est temporaire : l'extension disparaît au redémarrage de Firefox
 
 ## Utilisation
 
-1. Cliquez sur l'icône de l'extension dans la barre d'outils (après l'avoir épinglée depuis le menu des extensions), ou
-2. Utilisez le raccourci clavier `Ctrl+Shift+D` (ou `Cmd+Shift+D` sur Mac)
-3. Les cookies sont supprimés instantanément
-4. Une notification confirme la suppression avec le nombre de cookies effacés
+1. Épinglez l'icône depuis le menu des extensions (pièce de puzzle)
+2. En cas de souci sur Outlook / M365 : clic sur l'icône ou `Ctrl+Shift+D` (nettoyage léger)
+3. Si la connexion reste cassée : clic droit sur l'icône → « Reset complet », ou `Alt+Shift+D`
+
+Les raccourcis se modifient dans `about:addons` → roue dentée → « Gérer les raccourcis ».
 
 ## Développement
 
@@ -84,7 +91,8 @@ L'extension nécessite les permissions suivantes :
 - `browsingData` : Pour supprimer les données de navigation
 - `notifications` : Pour afficher la confirmation après suppression
 - `cookies` : Pour accéder et supprimer les cookies
-- `<all_urls>` : Pour accéder aux cookies de tous les domaines ciblés
+- `menus` : Pour le menu clic droit « Reset complet » sur l'icône
+- Accès aux sites des domaines ciblés uniquement (`*://*.office.com/*`, `*://*.cloud.microsoft/*`, etc.) : pour lire et supprimer leurs cookies
 
 ### Technologies utilisées
 
@@ -109,6 +117,11 @@ Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de 
 L. Jouglar
 
 ## Notes de version
+
+### v1.2.0
+- Deux niveaux : nettoyage léger (cloud.microsoft, office.com, office365.com) par clic ou `Ctrl+Shift+D`, reset complet par clic droit ou `Alt+Shift+D`
+- Permissions limitées aux domaines ciblés au lieu de `<all_urls>`
+- Description de l'extension mise à jour
 
 ### v1.1.1
 - Mises à jour automatiques via `update_url` (manifeste `updates.json` hébergé sur GitHub)

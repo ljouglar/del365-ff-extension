@@ -1,8 +1,8 @@
 {
     "manifest_version": 2,
     "name": "Del365 - Suppression données Office 365",
-    "version": "1.1.1",
-    "description": "Supprime rapidement les données de navigation du domaine office365.com",
+    "version": "1.2.0",
+    "description": "Nettoie les cookies et le stockage Office 365 / Microsoft, en mode léger ou complet",
     "icons": {
         "48": "icons/icon-48.png",
         "96": "icons/icon-96.png"
@@ -11,7 +11,19 @@
         "browsingData",
         "notifications",
         "cookies",
-        "<all_urls>"
+        "menus",
+        "*://*.office365.com/*",
+        "*://*.office.com/*",
+        "*://*.office.net/*",
+        "*://*.outlook.com/*",
+        "*://*.microsoft.com/*",
+        "*://*.microsoftonline.com/*",
+        "*://*.cloud.microsoft/*",
+        "*://*.static.microsoft/*",
+        "*://*.live.com/*",
+        "*://*.sharepoint.com/*",
+        "*://*.office-web.sips-services.com/*",
+        "*://*.koesio.com/*"
     ],
     "background": {
         "scripts": [
@@ -23,7 +35,7 @@
             "48": "icons/icon-48.png",
             "96": "icons/icon-96.png"
         },
-        "default_title": "Supprimer les données Office 365"
+        "default_title": "Del365 : nettoyage léger (clic droit : reset complet)"
     },
     "commands": {
         "delete-office365-data": {
@@ -31,7 +43,14 @@
                 "default": "Ctrl+Shift+D",
                 "mac": "Command+Shift+D"
             },
-            "description": "Supprimer les données Office 365"
+            "description": "Nettoyage léger (Outlook / M365)"
+        },
+        "delete-office365-data-full": {
+            "suggested_key": {
+                "default": "Alt+Shift+D",
+                "mac": "Alt+Shift+D"
+            },
+            "description": "Reset complet (toute la session Microsoft)"
         }
     },
     "browser_specific_settings": {

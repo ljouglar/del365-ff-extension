@@ -6,6 +6,11 @@
                     "version": "1.1.1",
                     "update_link": "https://github.com/ljouglar/del365-ff-extension/releases/download/v1.1.1/del365-1.1.1.xpi",
                     "update_hash": "sha256:41cb689124e6f9c4ffa9acc2e6070f3de9b38911615522212fab004ca3487b82"
+                },
+                {
+                    "version": "1.2.0",
+                    "update_link": "https://github.com/ljouglar/del365-ff-extension/releases/download/v1.2.0/del365-1.2.0.xpi",
+                    "update_hash": "sha256:945b182adf3603dfaf20fa36885bc1e1572e21625ac40ff275e90bcaa9ec0ffc"
                 }
             ]
         }
