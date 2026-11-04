@@ -22,6 +22,14 @@ Cette extension ajoute un bouton dans la barre d'outils Firefox et un raccourci 
 
 ## Installation
 
+### Installation de la version signée (recommandé)
+
+1. Ouvrez la [dernière release](https://github.com/ljouglar/del365-ff-extension/releases/latest) dans Firefox
+2. Cliquez sur le fichier `.xpi` (par exemple `del365-1.1.0.xpi`) et acceptez l'installation
+3. Épinglez l'icône depuis le menu des extensions (pièce de puzzle)
+
+L'extension est signée par Mozilla : elle reste installée après un redémarrage de Firefox. Il n'y a pas de mise à jour automatique : pour passer à une nouvelle version, installez le `.xpi` de la nouvelle release.
+
 ### Installation en développement
 
 1. Clonez ce dépôt :
@@ -38,9 +46,7 @@ Cette extension ajoute un bouton dans la barre d'outils Firefox et un raccourci 
 
 5. Sélectionnez le fichier `manifest.json` dans le dossier du projet
 
-### Installation depuis le store Firefox
-
-_(À venir)_
+Ce chargement est temporaire : l'extension disparaît au redémarrage de Firefox.
 
 ## Utilisation
 
@@ -96,7 +102,14 @@ L. Jouglar
 
 ## Notes de version
 
-### v1.0.0 (à venir)
+### v1.1.0
+- Domaines ajoutés : cloud.microsoft, static.microsoft, office.net, live.com, sharepoint.com
+- Suppression des cookies dans tous les conteneurs, y compris les cookies partitionnés
+- Vidage de localStorage, IndexedDB et des service workers d'Outlook, Teams et du SSO
+- Correspondance exacte des domaines et sous-domaines (plus de correspondance par sous-chaîne)
+- Première version signée, publiée en [release GitHub](https://github.com/ljouglar/del365-ff-extension/releases/tag/v1.1.0)
+
+### v1.0.0
 - Première version
 - Bouton dans la barre d'outils
 - Suppression des données Office 365
