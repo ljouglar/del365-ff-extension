@@ -12,7 +12,7 @@ Deux niveaux de nettoyage :
 
 | Niveau | Déclenchement | Domaines nettoyés | Effet |
 |---|---|---|---|
-| **Léger** | Clic sur l'icône, ou `Ctrl+Shift+D` (`Cmd+Shift+D` sur Mac) | cloud.microsoft, office.com, office365.com | Débloque Outlook / M365 sans toucher à la session SSO : Teams, SharePoint et les autres outils restent connectés |
+| **Léger** | Clic sur l'icône, ou `Ctrl+Shift+D` (`Cmd+Shift+D` sur Mac) | cloud.microsoft (sauf Teams), office.com, office365.com | Débloque Outlook / M365 sans toucher à la session SSO : Teams, SharePoint et les autres outils restent connectés, et Teams garde ses réglages (langue…) |
 | **Complet** | Clic droit sur l'icône → « Reset complet », ou `Alt+Shift+D` | Tous les domaines ci-dessous | Déconnecte tous les services Microsoft, pour quand la session d'authentification elle-même est cassée |
 
 Domaines du reset complet :
@@ -31,7 +31,7 @@ Dans les deux cas, l'extension supprime les cookies (y compris partitionnés et 
 ### Installation de la version signée (recommandé)
 
 1. Ouvrez la [dernière release](https://github.com/ljouglar/del365-ff-extension/releases/latest) dans Firefox
-2. Cliquez sur le fichier `.xpi` (par exemple `del365-1.2.0.xpi`) et acceptez l'installation
+2. Cliquez sur le fichier `.xpi` (par exemple `del365-1.2.1.xpi`) et acceptez l'installation
 3. Épinglez l'icône depuis le menu des extensions (pièce de puzzle)
 
 L'extension est signée par Mozilla : elle reste installée après un redémarrage de Firefox. À partir de la 1.1.1, Firefox installe automatiquement les nouvelles versions (il consulte `updates.json` sur la branche `main`). Si vous avez la 1.1.0, installez une fois la 1.1.1 à la main pour en profiter.
@@ -117,6 +117,9 @@ Ce projet est sous licence MIT. Voir le fichier [LICENSE](LICENSE) pour plus de 
 L. Jouglar
 
 ## Notes de version
+
+### v1.2.1
+- Le nettoyage léger ne touche plus à Teams (teams.cloud.microsoft, teams.microsoft.com) : ni cookies ni stockage. Teams reste connecté et garde sa langue
 
 ### v1.2.0
 - Deux niveaux : nettoyage léger (cloud.microsoft, office.com, office365.com) par clic ou `Ctrl+Shift+D`, reset complet par clic droit ou `Alt+Shift+D`

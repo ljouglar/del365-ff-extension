@@ -1,7 +1,7 @@
 {
     "manifest_version": 2,
     "name": "Del365 - Suppression données Office 365",
-    "version": "1.2.0",
+    "version": "1.2.1",
     "description": "Nettoie les cookies et le stockage Office 365 / Microsoft, en mode léger ou complet",
     "icons": {
         "48": "icons/icon-48.png",

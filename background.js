@@ -24,14 +24,19 @@ const FULL_DOMAINS = [
 // (Teams, SharePoint et les autres outils Microsoft restent connectés).
 const LIGHT_DOMAINS = ["cloud.microsoft", "office.com", "office365.com"];
 
+// Exclus du nettoyage léger : Teams garde sa session, sa langue et ses réglages.
+const LIGHT_EXCLUDED_DOMAINS = ["teams.cloud.microsoft", "teams.microsoft.com"];
+
 // Hôtes dont on vide aussi le stockage (localStorage, IndexedDB, service workers).
 // browsingData.remove ne garantit pas la prise en compte des sous-domaines,
-// on liste donc explicitement les hôtes utilisés par Outlook / Teams / le SSO.
+// on liste donc explicitement les hôtes utilisés par Outlook / M365 / le SSO.
+// Le nettoyage léger ne cite pas "cloud.microsoft" seul : selon Firefox, le
+// stockage de ses sous-domaines (dont Teams) pourrait être vidé avec.
 const LIGHT_STORAGE_HOSTNAMES = [
-  ...LIGHT_DOMAINS,
   "outlook.cloud.microsoft",
   "m365.cloud.microsoft",
-  "teams.cloud.microsoft",
+  "office.com",
+  "office365.com",
   "outlook.office.com",
   "outlook.office365.com",
   "www.office.com",
@@ -43,6 +48,7 @@ const FULL_STORAGE_HOSTNAMES = [
     ...LIGHT_STORAGE_HOSTNAMES,
     "login.microsoftonline.com",
     "login.live.com",
+    "teams.cloud.microsoft",
     "teams.microsoft.com",
     "portail.koesio.com",
   ]),
@@ -52,11 +58,13 @@ const MODES = {
   light: {
     label: "Nettoyage léger",
     domains: LIGHT_DOMAINS,
+    excludedDomains: LIGHT_EXCLUDED_DOMAINS,
     storageHostnames: LIGHT_STORAGE_HOSTNAMES,
   },
   full: {
     label: "Reset complet",
     domains: FULL_DOMAINS,
+    excludedDomains: [],
     storageHostnames: FULL_STORAGE_HOSTNAMES,
   },
 };
@@ -71,7 +79,7 @@ function matchesDomains(host, domains) {
  * y compris les cookies partitionnés (Total Cookie Protection),
  * qui appartiennent aux domaines ciblés ou ont été déposés dans leur contexte.
  */
-async function getTargetCookies(domains) {
+async function getTargetCookies(domains, excludedDomains) {
   const stores = await browser.cookies.getAllCookieStores();
   const cookies = [];
   for (const store of stores) {
@@ -88,13 +96,14 @@ async function getTargetCookies(domains) {
   }
   return cookies.filter(
     (c) =>
-      matchesDomains(c.domain, domains) ||
-      matchesDomains(
-        c.partitionKey && c.partitionKey.topLevelSite
-          ? new URL(c.partitionKey.topLevelSite).hostname
-          : "",
-        domains,
-      ),
+      !matchesDomains(c.domain, excludedDomains) &&
+      (matchesDomains(c.domain, domains) ||
+        matchesDomains(
+          c.partitionKey && c.partitionKey.topLevelSite
+            ? new URL(c.partitionKey.topLevelSite).hostname
+            : "",
+          domains,
+        )),
   );
 }
 
@@ -123,7 +132,7 @@ async function deleteOffice365Data(modeName) {
   try {
     let deletionCount = 0;
 
-    const cookies = await getTargetCookies(mode.domains);
+    const cookies = await getTargetCookies(mode.domains, mode.excludedDomains);
     console.log(`[${mode.label}] Cookies ciblés: ${cookies.length}`);
 
     for (const cookie of cookies) {
